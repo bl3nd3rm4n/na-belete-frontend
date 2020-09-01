@@ -1,0 +1,36 @@
+<form [formGroup]="registerForm" class="normal-form" (ngSubmit)="registerUser()">
+  <div class="controls-container">
+
+    <mat-form-field>
+      <input formControlName="username" matInput placeholder="Email" (focus)="focused=true">
+      <mat-error>Invalid email address.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="password" formControlName="password" matInput placeholder="Password" (focus)="focused=true">
+      <mat-error>Password is required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input type="password" formControlName="confirmPassword" matInput placeholder="Confirm Password"
+             [errorStateMatcher]="matcher">
+      <mat-error *ngIf="registerForm.hasError('notSame')">
+        Passwords do not match
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input formControlName="firstName" matInput placeholder="First Name" (focus)="focused=true">
+      <mat-error>Please enter your first name.</mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input formControlName="lastName" matInput placeholder="Last Name" (focus)="focused=true">
+      <mat-error>Please enter your last name.</mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit" [disabled]="registerForm.invalid">Register</button>
+    <mat-error *ngIf="focused==false">{{errorFromServer}}</mat-error>
+
+  </div>
+</form>

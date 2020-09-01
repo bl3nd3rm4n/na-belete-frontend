@@ -1,0 +1,54 @@
+<nav mat-tab-nav-bar>
+
+  <!--Public-->
+  <a mat-tab-link *ngFor="let link of publicLinks"
+    [routerLink]="link.path"
+     routerLinkActive #rla="routerLinkActive"
+    [active]="rla.isActive"
+    [routerLinkActiveOptions]="{exact: true}">
+    {{link.label}}
+  </a>
+
+  <!--Admin-->
+  <ng-container *ngIf="loggedInUserValue()">
+    <ng-container *ngIf="loggedInUserValue().role === Role.Admin">
+      <a mat-tab-link *ngFor="let link of adminLinks"
+        [routerLink]="link.path"
+         routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive"
+        [routerLinkActiveOptions]="{exact: true}">
+        {{link.label}} </a>
+    </ng-container>
+  </ng-container>
+  <!--User-->
+  <ng-container *ngIf="loggedInUserValue()">
+    <ng-container *ngIf="loggedInUserValue().role === Role.User">
+      <a mat-tab-link *ngFor="let link of userLinks"
+        [routerLink]="link.path"
+         routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive"
+        [routerLinkActiveOptions]="{exact: true}">
+        {{link.label}}
+
+      </a>
+    </ng-container>
+  </ng-container>
+
+  <span class="fill-remaining-space"></span>
+
+  <!--Authentication-->
+  <ng-container *ngIf="!loggedInUserValue()">
+    <a mat-tab-link *ngFor="let link of authenticationLinks"
+      [routerLink]="link.path"
+       routerLinkActive #rla="routerLinkActive"
+      [active]="rla.isActive"
+      [routerLinkActiveOptions]="{exact: true}">
+      {{link.label}}
+
+    </a>
+  </ng-container>
+  <ng-container *ngIf="loggedInUserValue()">
+    <button mat-button="" color="primary" type="button" (click)="logOutClick()" *ngIf="loggedInUserValue()">Log out
+    </button>
+  </ng-container>
+</nav>
